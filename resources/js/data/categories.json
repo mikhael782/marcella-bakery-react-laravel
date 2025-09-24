@@ -1,0 +1,37 @@
+[
+    { 
+        "id": "bolu", 
+        "title": "Bolu", 
+        "image": "/img/categories/bolu.jpg"
+    },
+    { 
+        "id": "bread", 
+        "title": "Bread", 
+        "image": "/img/categories/bread.jpg"
+    },
+    { 
+        "id": "brownies", 
+        "title": "Brownies", 
+        "image": "/img/categories/brownies.jpg"
+    },
+    { 
+        "id": "cake", 
+        "title": "Cake", 
+        "image": "/img/categories/cakes.jpg"
+    },
+    { 
+        "id": "cookies", 
+        "title": "Cookies", 
+        "image": "/img/categories/cookies.png" 
+    },
+    { 
+        "id": "pastries", 
+        "title": "Pastries", 
+        "image": "/img/categories/macarons.jpg"
+    },
+    { 
+        "id": "traditional-food", 
+        "title": "Traditional Food", 
+        "image": "/img/categories/traditional_food.jpg"
+    }
+]

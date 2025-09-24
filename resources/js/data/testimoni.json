@@ -1,0 +1,20 @@
+[
+    {
+        "name": "John Doe",
+        "role": "Entrepreneur",
+        "photo": "https://randomuser.me/api/portraits/men/32.jpg",
+        "text": "Pelayanan bagus banget!"
+    },
+    {
+        "name": "Sarah Lee",
+        "role": "Designer",
+        "photo": "https://randomuser.me/api/portraits/women/44.jpg",
+        "text": "Kue nya enak banget 😍"
+    },
+    {
+        "name": "Michael Chen",
+        "role": "Developer",
+        "photo": "https://randomuser.me/api/portraits/men/67.jpg",
+        "text": "Enak banget, lembut sekali, saya happy sekali."
+    }
+]

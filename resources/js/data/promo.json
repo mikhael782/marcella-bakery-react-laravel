@@ -1,0 +1,167 @@
+[
+    {
+        "id": 1,
+        "title": "Diskon 20% Bolu Coklat",
+        "name": "Bolu Cokelat",
+        "price": "Rp 150.000",
+        "description": "Promo spesial hanya minggu ini",
+        "image": "/img/menu/chocolate_cake.jpg",
+        "previews": [
+            "/img/menu/chocolate_cake.jpg",
+            "/img/menu/chocolate_cake.jpg",
+            "/img/menu/chocolate_cake.jpg"
+        ],
+        "rating": 4,
+        "sizes": ["Small", "Medium", "Large"],
+        "reviews": [
+            {
+                "name": "Hoo Devani Negita P",
+                "rating": 5,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            },
+            {
+                "name": "Felicia Angel",
+                "rating": 4.5,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            },
+            {
+                "name": "Johanna Grace",
+                "rating": 4,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            }
+        ],
+        "category": "Cake"
+    },
+    {
+        "id": 2,
+        "title": "Diskon 20% Birthday Cake",
+        "name": "Birthday Cake",
+        "price": "Rp 150.000",
+        "description": "Promo spesial hanya minggu ini",
+        "image": "/img/menu/birthday_cake.jpg",
+        "previews": [
+            "/img/menu/birthday_cake.jpg",
+            "/img/menu/birthday_cake.jpg",
+            "/img/menu/birthday_cake.jpg"
+        ],
+        "rating": 4,
+        "sizes": ["Small", "Medium", "Large"],
+        "reviews": [
+            {
+                "name": "Hoo Devani Negita P",
+                "rating": 5,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            },
+            {
+                "name": "Felicia Angel",
+                "rating": 4.5,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            },
+            {
+                "name": "Johanna Grace",
+                "rating": 4,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            }
+        ],
+        "category": "Cake"
+    },
+    {
+        "id": 3,
+        "title": "Diskon 20% Bolu Coklat",
+        "name": "Bolu Cokelat",
+        "price": "Rp 150.000",
+        "description": "Promo spesial hanya minggu ini",
+        "image": "/img/menu/birthday_cake.jpg",
+        "previews": [
+            "/img/menu/birthday_cake.jpg",
+            "/img/menu/birthday_cake.jpg",
+            "/img/menu/birthday_cake.jpg"
+        ],
+        "rating": 4,
+        "sizes": ["Small", "Medium", "Large"],
+        "reviews": [
+            {
+                "name": "Hoo Devani Negita P",
+                "rating": 5,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            },
+            {
+                "name": "Felicia Angel",
+                "rating": 4.5,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            },
+            {
+                "name": "Johanna Grace",
+                "rating": 4,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            }
+        ],
+        "category": "Cake"
+    },
+    {
+        "id": 4,
+        "title": "Diskon 20% Bolu Coklat",
+        "name": "Bolu Cokelat",
+        "price": "Rp 150.000",
+        "description": "Promo spesial hanya minggu ini",
+        "image": "/img/menu/birthday_cake.jpg",
+        "previews": [
+            "/img/menu/birthday_cake.jpg",
+            "/img/menu/birthday_cake.jpg",
+            "/img/menu/birthday_cake.jpg"
+        ],
+        "rating": 4,
+        "sizes": ["Small", "Medium", "Large"],
+        "reviews": [
+            {
+                "name": "Hoo Devani Negita P",
+                "rating": 5,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            },
+            {
+                "name": "Felicia Angel",
+                "rating": 4.5,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            },
+            {
+                "name": "Johanna Grace",
+                "rating": 4,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            }
+        ],
+        "category": "Cake"
+    },
+    {
+        "id": 5,
+        "title": "Diskon 20% Bolu Coklat",
+        "name": "Bolu Cokelat",
+        "price": "Rp 150.000",
+        "description": "Promo spesial hanya minggu ini",
+        "image": "/img/menu/birthday_cake.jpg",
+        "previews": [
+            "/img/menu/birthday_cake.jpg",
+            "/img/menu/birthday_cake.jpg",
+            "/img/menu/birthday_cake.jpg"
+        ],
+        "rating": 4,
+        "sizes": ["Small", "Medium", "Large"],
+        "reviews": [
+            {
+                "name": "Hoo Devani Negita P",
+                "rating": 5,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            },
+            {
+                "name": "Felicia Angel",
+                "rating": 4.5,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            },
+            {
+                "name": "Johanna Grace",
+                "rating": 4,
+                "comment": "Enak banget, lembut sekali, saya happy sekali."
+            }
+        ],
+        "category": "Cake"
+    }
+]
