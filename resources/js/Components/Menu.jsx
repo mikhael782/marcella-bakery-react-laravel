@@ -12,7 +12,7 @@ const Menu = forwardRef((props, ref) => {
         fetch("http://localhost:8000/api/menus")
         .then((res) => res.json())
         .then((data) => setItems(data))
-        .then((err) => console.error(err));
+        .catch((err) => console.error(err));
     }, []);
 
     return (
@@ -57,7 +57,7 @@ const Menu = forwardRef((props, ref) => {
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                onClick={() => navigate(`/preview/${item.id}/${slugify(item.name)}`)}
+                                onClick={() => navigate(`/preview/${item.preview_id}/${slugify(item.slug)}`)}
                                 className="mt-2 px-4 py-1 bg-pink-500 text-white rounded-lg cursor-pointer"
                             >
                                 Preview

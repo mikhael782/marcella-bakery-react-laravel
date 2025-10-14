@@ -1,15 +1,26 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { delay, motion } from "framer-motion";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import imagesData from "../data/images.json";
 
 const GalleryTeaser = forwardRef((props, ref) => {
     const navigate = useNavigate();
-    const images = imagesData.teaser.map((src) => ({src}));
+    const [images, setImages] = useState([]);
     const [isOpen, setOpen] = useState(false);
     const [index, setIndex] = useState(0);
+
+    useEffect(() => {
+        // Url BE Laravel
+        fetch("http://localhost:8000/api/gallerys")
+        .then((res) => res.json())
+        .then((data) => {
+            // Convert agar sesuai Lightbox
+            const slides = data.map(item => ({ src: item.images }));
+            setImages(slides);
+        })
+        .catch((err) => console.error(err));
+    }, []);
 
     return (
         <section ref={ref} className="py-2 bg-pink-100 rounded-3xl scroll-mt-10">
@@ -27,7 +38,7 @@ const GalleryTeaser = forwardRef((props, ref) => {
 
                 {/* Grid Teaser */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {images.map((img, idx) => (
+                    {images.map((images, idx) => (
                         <motion.div
                             key={idx}
                             initial={{ opacity: 0, y: 50 }}
@@ -36,7 +47,7 @@ const GalleryTeaser = forwardRef((props, ref) => {
                             viewport={{ once: true }}
                         >
                             <img
-                                src={img.src}
+                                src={images.src}
                                 alt={`Gallery ${idx}`}
                                 className="rounded-xl w-full h-64 object-cover cursor-pointer hover:opacity-80 transition"
                                 onClick={() => {

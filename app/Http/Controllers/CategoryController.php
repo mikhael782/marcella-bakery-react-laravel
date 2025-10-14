@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,26 @@ class CategoryController extends Controller
     public function index()
     {
         // Ambil semua kategori
-        $categories = Category::all();
+        $categories = Category::select('name', 'slug', 'image')->get();
         return response()->json($categories);
+    }
+
+    /**
+     * Fungsi untuk mengambil data product dari tbl_menus untuk di halaman
+     * Category Product
+     */
+    public function products($slug)
+    {
+        $category = Category::with('menus')
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $menus = $category->menus->map(function($menu) {
+            // bikin full URL untuk frontend
+            $menu->image = Storage::url($menu->image);
+            return $menu;
+        });
+
+        return response()->json($menus);
     }
 }

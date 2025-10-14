@@ -20,10 +20,18 @@ class Menu extends Model
     ];
 
     /**
-     * Fungsi untuk relasi ke tbl categories
+     * Relasi ke tbl categories
      */
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * Relasi ke tbl_previews
+     */
+    public function previews()
+    {
+        return $this->hasMany(Preview::class, 'menu_id');
     }
 }

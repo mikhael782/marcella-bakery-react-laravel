@@ -2,15 +2,23 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import promos from "../data/promo.json";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import slugify from "../utils/slugify";
 
 const Promo = forwardRef((props, ref) => {
     const navigate = useNavigate();
+    const [promos, setPromos] = useState([]);
+
+    useEffect(() => {
+        // Url BE Laravel
+        fetch("http://localhost:8000/api/promos")
+        .then((res) => res.json())
+        .then((data) => setPromos(data))
+        .catch((err) => console.error(err));
+    }, []);
 
     return (
         // className="py-2 bg-pink-200 rounded-b-4xl scroll-mt-10"
@@ -48,10 +56,10 @@ const Promo = forwardRef((props, ref) => {
                                 transition={{ duration: 0.5 }}
                                 viewport={{ once: true }}
                                 className="relative h-64 rounded-lg overflow-hidden shadow-lg cursor-pointer"
-                                onClick={() => navigate(`/promo-products/${promo.id}/${slugify(promo.name)}`)}
+                                onClick={() => navigate(`/promo-products/${promo.id}/${slugify(promo.slug)}`)}
                             >
                                 <img
-                                    src={promo.image}
+                                    src={promo.images}
                                     alt={promo.title}
                                     className="w-full h-full object-cover"
                                 />

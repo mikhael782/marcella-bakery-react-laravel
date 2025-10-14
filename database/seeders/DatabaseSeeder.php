@@ -23,6 +23,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             MenuSeeder::class,
+            PreviewSeeder::class,
+            PromoSeeder::class,
+            PromoProductSeeder::class,
+            GallerySeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
