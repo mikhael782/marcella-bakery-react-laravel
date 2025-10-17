@@ -49,10 +49,12 @@ const Categories = forwardRef((props, ref) => {
                             alt={cat.name}
                             className="w-full h-full object-cover"
                         />
+
                         {/* overlay transparan */}
                         <div className="absolute inset-0 bg-black/30 z-10"></div>
+
                         {/* text di atas overlay */}
-                        <h3 className="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow z-20">
+                        <h3 className="absolute text-white text-lg font-bold bottom-0 left-0 w-full z-20 bg-gradient-to-t from-black/80 to-transparent p-3">
                             {cat.name}
                         </h3>
                     </motion.div>

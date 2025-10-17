@@ -7,31 +7,34 @@ import "yet-another-react-lightbox/styles.css";
 const GalleryPage = () => {
     const { categoryId } = useParams();
     const navigate = useNavigate();
+    const [categories, setCategories] = useState([]);
     const [filtered, setFiltered] = useState([]);
     const [isOpen, setOpen] = useState(false);
     const [index, setIndex] = useState(0);
     const [loading, setLoading] = useState(true);
 
-    const categories = [
-        { title: "All", value: "all" },
-        { title: "Bolu", value: "bolu" },
-        { title: "Bread", value: "bread" },
-        { title: "Brownies", value: "brownies" },
-        { title: "Cake", value: "cake" },
-        { title: "Cookies", value: "cookies" },
-        { title: "Pastries", value: "pastries" },
-        { title: "Traditional Food", value: "traditional-food" }
-    ];
+    // Ambil categories dari APi
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const res = await fetch("http://localhost:8000/api/categories");
+                const data = await res.json();
+                setCategories([{name: "All", slug: "all"}, ...data]);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchCategories()
+    }, []);
 
     // update images setiap kali categoryId berubah
     useEffect(() => {
         const fetchGalleryPages = async () => {
             setLoading(true); // set ke true setiap kali pindah kategori
             try {
-                const url =
-                    categoryId && categoryId.toLowerCase() !== "all"
-                        ? `http://localhost:8000/api/categories/${categoryId}/gallery`
-                        : `http://localhost:8000/api/gallerys`;
+                const url = categoryId && categoryId.toLowerCase() !== "all"
+                    ? `http://localhost:8000/api/categories/${categoryId}/gallery`
+                    : `http://localhost:8000/api/gallerys`;
 
                 const res = await fetch(url);
                 const data = await res.json();
@@ -47,7 +50,7 @@ const GalleryPage = () => {
     }, [categoryId]);
 
     const currentCategory = categories.find (
-        (cat) => cat.value.toLowerCase() === categoryId?.toLowerCase()
+        (cat) => cat.slug.toLowerCase() === (categoryId ? categoryId.toLowerCase() : "all")
     );
 
     return (
@@ -87,82 +90,83 @@ const GalleryPage = () => {
                     transition={{ duration: 0.8 }}
                 >
                     <div
-                        className="max-w-7xl mx-auto py-16 px-4 mb-20"
+                        className="max-w-7xl mx-auto py-16 px-4"
                         style={{ fontFamily:'"Comic Sans MS", "Comic Neue", sans-serif',}}
                     >
                         <h2 className="text-xl font-bold text-pink-500 mt-10 mb-6 capitalize">
-                            {currentCategory ? currentCategory.title : "All"}{" "}
-                            Gallery
+                            {currentCategory ? currentCategory.name : "All"} Gallery
                         </h2>
 
-                        {/* Tabs */}
-                        <div className="flex justify-center gap-8 mb-10 flex-wrap">
-                            {categories.map((cat, idx) => {
-                                const active = (categoryId || "all").toLowerCase() === cat.value.toLowerCase();
+                        <section className="p-10 bg-pink-100 rounded-2xl">
+                            {/* Tabs */}
+                            <div className="flex justify-center gap-8 mb-10 flex-wrap">
+                                {categories.map((cat, idx) => {
+                                    const active = (categoryId ? categoryId.toLowerCase() : "all") === cat.slug.toLowerCase();
 
-                                return (
-                                    <motion.button
-                                        key={idx}
-                                        onClick={() =>
-                                            navigate(cat.value === "all"
+                                    return (
+                                        <motion.button
+                                            key={idx}
+                                            onClick={() =>
+                                                navigate(cat.slug === "all"
                                                     ? "/gallery"
-                                                    : `/gallery/${cat.value.toLowerCase()}`
-                                            )
-                                        }
-                                        className={`relative pb-2 text-lg transition-all cursor-pointer ${
-                                            active
-                                                ? "text-pink-500 font-bold"
-                                                : "text-gray-700 hover:text-pink-500"
-                                        }`}
-                                    >
-                                        {cat.title}
-                                        {active && (
-                                            <motion.div
-                                                layoutId="underline"
-                                                transition={{
-                                                    type: "spring",
-                                                    stiffness: 500,
-                                                    damping: 30,
-                                                }}
-                                                className="absolute left-0 right-0 -bottom-1 h-0.5 bg-pink-500 rounded"
-                                            />
-                                        )}
-                                    </motion.button>
-                                );
-                            })}
-                        </div>
+                                                    : `/gallery/${cat.slug.toLowerCase()}`
+                                                )
+                                            }
+                                            className={`relative pb-2 text-lg transition-all cursor-pointer ${
+                                                active
+                                                    ? "text-pink-500 font-bold"
+                                                    : "text-gray-700 hover:text-pink-500"
+                                            }`}
+                                        >
+                                            {cat.name}
+                                            {active && (
+                                                <motion.div
+                                                    layoutId="underline"
+                                                    transition={{
+                                                        type: "spring",
+                                                        stiffness: 500,
+                                                        damping: 30,
+                                                    }}
+                                                    className="absolute left-0 right-0 -bottom-1 h-1 bg-pink-500 rounded-xl"
+                                                />
+                                            )}
+                                        </motion.button>
+                                    );
+                                })}
+                            </div>
 
-                        {/* Gallery Grid */}
-                        <div
-                            key={categoryId} // penting biar re-render setiap ganti kategori
-                            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-                        >
-                            {filtered.length > 0 ? (
-                                filtered.map((images, idx) => (
-                                    <motion.img
-                                        key={idx}
-                                        initial={{ opacity: 0, y: 50 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{
-                                            duration: 0.5,
-                                            delay: idx * 0.15,
-                                        }}
-                                        src={images.src}
-                                        alt={`Gallery ${idx}`}
-                                        className="rounded-lg cursor-pointer h-64 w-full object-cover"
-                                        whileHover={{ scale: 1.05 }}
-                                        onClick={() => {
-                                            setIndex(idx);
-                                            setOpen(true);
-                                        }}
-                                    />
-                                ))
-                            ) : (
-                                <p className="text-gray-500">
-                                    No images available in this category.
-                                </p>
-                            )}
-                        </div>
+                            {/* Gallery Grid */}
+                            <div
+                                key={categoryId} // penting biar re-render setiap ganti kategori
+                                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+                            >
+                                {filtered.length > 0 ? (
+                                    filtered.map((images, idx) => (
+                                        <motion.img
+                                            key={idx}
+                                            initial={{ opacity: 0, y: 50 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{
+                                                duration: 0.5,
+                                                delay: idx * 0.15,
+                                            }}
+                                            src={images.src}
+                                            alt={`Gallery ${idx}`}
+                                            className="rounded-lg cursor-pointer h-64 w-full object-cover"
+                                            whileHover={{ scale: 1.05 }}
+                                            onClick={() => {
+                                                setIndex(idx);
+                                                setOpen(true);
+                                            }}
+                                        />
+                                    ))
+                                ) : (
+                                    <p className="text-pink-500">
+                                        No images available in this category.
+                                    </p>
+                                )}
+                            </div>
+                        </section>
 
                         {/* Lightbox */}
                         <Lightbox

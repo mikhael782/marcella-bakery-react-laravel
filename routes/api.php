@@ -13,6 +13,7 @@ Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{slug}/products', [CategoryController::class, 'products']);
 
 Route::get('/menus', [MenuController::class, 'index']);
+Route::get('/menus/related/{id}', [MenuController::class, 'relatedItems']);
 Route::get('/menus/{slug}', [MenuController::class, 'showPreview']);
 Route::get('/preview/{id}/{slug}', [PreviewController::class, 'index'])->name('preview.show');
 

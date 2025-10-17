@@ -24,6 +24,14 @@ class Promo extends Model
      */
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * Relasi ke tbl_promo_products
+     */
+    public function promoProducts()
+    {
+        return $this->hasMany(PromoProduct::class, 'promo_id');
     }
 }

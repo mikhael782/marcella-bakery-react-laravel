@@ -15,6 +15,8 @@ class CategoryController extends Controller
     {
         // Ambil semua kategori
         $categories = Category::select('name', 'slug', 'image')->get();
+
+        // Kembalikan hasil sebagai JSON
         return response()->json($categories);
     }
 
@@ -24,16 +26,19 @@ class CategoryController extends Controller
      */
     public function products($slug)
     {
+        // Ambil kategori berdasarkan slug serta semua menunya
         $category = Category::with('menus')
             ->where('slug', $slug)
             ->firstOrFail();
 
+        // Jadikan image full URL biar React bisa render
         $menus = $category->menus->map(function($menu) {
             // bikin full URL untuk frontend
             $menu->image = Storage::url($menu->image);
             return $menu;
         });
 
+        // Kembalikan hasil sebagai JSON
         return response()->json($menus);
     }
 }

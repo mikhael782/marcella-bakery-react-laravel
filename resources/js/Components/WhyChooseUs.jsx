@@ -26,7 +26,7 @@ const features = [
 
 const WhyChooseUs = () => {
     return (
-        <section className="py-2 bg-pink-100 rounded-3xl scroll-mt-10">
+        <section className="py-2 bg-pink-100 rounded-2xl scroll-mt-10">
             <div className="max-w-7xl mx-auto py-16 text-center px-6" style={{ fontFamily: '"Comic Sans MS", "Comic Neue", sans-serif' }}>
                 <motion.h2 
                     className="text-2xl font-bold text-pink-500 mb-3 relative inline-block"

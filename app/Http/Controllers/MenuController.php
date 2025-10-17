@@ -24,6 +24,7 @@ class MenuController extends Controller
             return $menu;
         });
 
+        // Kembalikan hasil sebagai JSON
         return response()->json($menus);
     }
 
@@ -32,11 +33,12 @@ class MenuController extends Controller
      */
     public function showPreview($slug)
     {
+        // Ambil menu berdasarkan slug, sekaligus relasi category dan preview
         $menu = Menu::with(['category', 'preview'])
             ->where('slug', $slug)
             ->firstOrFail();
 
-        // Convert image ke full URL
+        // Jadikan image full URL biar React bisa render
         if ($menu->image) {
             $menu->image = Storage::url($menu->image);
         }
@@ -48,6 +50,31 @@ class MenuController extends Controller
             }, $menu->preview->images_preview);
         }
 
+        // Kembalikan hasil sebagai JSON
         return response()->json($menu);
+    }
+
+    /**
+     * Fungsi untuk mengambil related items berdasarkan category
+     * untuk di halaman preview
+     */
+    public function relatedItems($id)
+    {
+        // Cari menu utama berdasarkan ID
+        $menu = Menu::findOrFail($id);
+
+        // Ambil menu lain yang kategori nya sama
+        $relatedMenus = Menu::where('category_id', $menu->category_id)
+            ->where('id', '!=' , $id)
+            ->get()
+            ->map(function ($menu) {
+                $menu->image = $menu->image ? Storage::url($menu->image) : null;
+                // Ambil preview pertama (buat tombol Preview)
+                $menu->preview_id = optional($menu->previews->first())->id;
+                return $menu;
+            });
+
+        // Kembalikan hasil sebagai JSON
+        return response()->json($relatedMenus);
     }
 }

@@ -9,6 +9,7 @@ const GalleryTeaser = forwardRef((props, ref) => {
     const [images, setImages] = useState([]);
     const [isOpen, setOpen] = useState(false);
     const [index, setIndex] = useState(0);
+    const visibleItems = images.slice(0, 8);
 
     useEffect(() => {
         // Url BE Laravel
@@ -23,8 +24,8 @@ const GalleryTeaser = forwardRef((props, ref) => {
     }, []);
 
     return (
-        <section ref={ref} className="py-2 bg-pink-100 rounded-3xl scroll-mt-10">
-            <section className="max-w-5xl mx-auto  text-center py-16 " style={{ fontFamily: '"Comic Sans MS", "Comic Neue", sans-serif' }}>
+        <section ref={ref} className="py-2 bg-pink-100 rounded-2xl scroll-mt-10">
+            <section className="max-w-7xl mx-auto  text-center py-16" style={{ fontFamily: '"Comic Sans MS", "Comic Neue", sans-serif' }}>
                 <motion.h2 
                     className="text-2xl font-bold text-pink-500 mb-6 relative inline-block"
                     initial={{ opacity: 0, y: -50 }}
@@ -37,8 +38,8 @@ const GalleryTeaser = forwardRef((props, ref) => {
                 </motion.h2>
 
                 {/* Grid Teaser */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {images.map((images, idx) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    {visibleItems.map((images, idx) => (
                         <motion.div
                             key={idx}
                             initial={{ opacity: 0, y: 50 }}

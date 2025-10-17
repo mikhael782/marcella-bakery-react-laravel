@@ -40,4 +40,12 @@ class Category extends Model
     {
         return $this->hasMany(Preview::class, 'category_id');
     }
+
+    /**
+     * Fungsi untuk hasMany ke tbl_promo_products
+     */
+    public function promoProducts()
+    {
+        return $this->hasMany(PromoProduct::class, 'category_id');
+    }
 }

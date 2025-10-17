@@ -14,8 +14,10 @@ class CategoryForm
             ->components([
                 TextInput::make('slug')
                     ->required(),
+
                 TextInput::make('name')
                     ->required(),
+
                 FileUpload::make('image')
                     ->image()
                     ->directory('categories')   // folder di storage/app/public/categories

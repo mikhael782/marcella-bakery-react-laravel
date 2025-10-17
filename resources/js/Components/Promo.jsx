@@ -43,8 +43,8 @@ const Promo = forwardRef((props, ref) => {
                     pagination={{ clickable: true, el: ".custom-pagination" }}
                     autoplay={{ delay: 3000 }}
                     breakpoints={{
-                        640: { slidesPerView: 2 },   // tablet → 2 card
-                        1024: { slidesPerView: 3 },  // laptop → 3 card
+                        640: { slidesPerView: 2 }, // tablet → 2 card
+                        1024: { slidesPerView: 3 }, // laptop → 3 card
                     }}
                     className="rounded-2xl"
                 >
@@ -56,7 +56,7 @@ const Promo = forwardRef((props, ref) => {
                                 transition={{ duration: 0.5 }}
                                 viewport={{ once: true }}
                                 className="relative h-64 rounded-lg overflow-hidden shadow-lg cursor-pointer"
-                                onClick={() => navigate(`/promo-products/${promo.id}/${slugify(promo.slug)}`)}
+                                onClick={() => navigate(`/promo-products/${promo.promo_product_id}/${slugify(promo.slug)}`)}
                             >
                                 <img
                                     src={promo.images}
@@ -65,12 +65,12 @@ const Promo = forwardRef((props, ref) => {
                                 />
 
                                 {/* Overlay transparan */}
-                                <div className="absolute inset-0 bg-black/30 z-10"></div>
+                                <div className="absolute inset-0 bg-black/25 z-10"></div>
 
-                                {/* Text di atas overlay */}
-                                <div className="absolute bottom-4 left-4 z-20">
-                                    <h3 className="text-white text-xl font-medium drop-shadow">{promo.title}</h3>
-                                    <p className="text-white text-sm drop-shadow">{promo.description}</p>
+                                {/* Text di atas overlay dengan background semi-transparent */}
+                                <div className="absolute bottom-0 left-0 w-full z-20 bg-black/50 p-3">
+                                    <h4 className="text-white text-medium font-bold drop-shadow-lg mb-1">{promo.title}</h4>
+                                    <p className="text-white text-sm drop-shadow-lg">{promo.description}</p>
                                 </div>
                             </motion.div>
                         </SwiperSlide>

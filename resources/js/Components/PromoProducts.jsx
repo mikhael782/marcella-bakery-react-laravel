@@ -73,9 +73,9 @@ export default function PromoProducts () {
                         </h2>
 
                         {/* Spinner */}
-                        <div className="w-10 h-10 mt-6 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
+                        <div className="w-10 h-10 mt-4 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
 
-                        <p className="text-gray-500 mt-2">Loading gallery...</p>
+                        <p className="text-pink-500 mt-4 font-semibold">Loading gallery...</p>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -86,11 +86,13 @@ export default function PromoProducts () {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duratio: 0.8 }}
-                    className="pt-24"
+                    className="pt-24 mb-6"
                 >
                     <div className="max-w-6xl mb-4 mx-auto flex flex-col md:flex-row gap-8 px-4"
                         style={{ fontFamily: '"Comic Sans MS", "Comic Neue", sans-serif' }}>
-                            <p className="text-pink-500 font-medium text-left">Promo Product {'>'} {promos.category} {'>'} {promos.name}</p>
+                            <p className="text-pink-500 font-medium text-left">
+                                Promo Product {'>'} {promos.category} {'>'} {promos.name}
+                            </p>
                     </div>
 
                     <div 
@@ -121,16 +123,24 @@ export default function PromoProducts () {
 
                         {/* Bagian kanan: deskripsi */}
                         <div className="flex-1">
-                            <h2 className="text-2xl font-medium text-pink-500 mb-4">
+                            <h2 className="text-xl font-semibold text-pink-500 mb-3">
                                 {promos.name}
                             </h2>
+                                
+                            <div className="mb-3 flex items-baseline gap-2">
+                                {/* Harga asli hardcode */}
+                                <span className="text-pink-500 line-through">
+                                    Rp {Number(promos.original_price).toLocaleString("id-ID")}
+                                </span>
 
-                            <p className="text-pink-500 font-medium mb-4">
-                                Rp {Number(promos.price).toLocaleString("id-ID")}
-                            </p>
+                                {/* Harga promo dari tbl_promo_products */}
+                                <p className="text-pink-500 font-medium">
+                                    Rp {Number(promos.price).toLocaleString("id-ID")}
+                                </p>
+                            </div>
 
                             {/* Rating */}
-                            <div className="flex items-center gap-1 mb-4">
+                            <div className="flex items-center gap-1 mb-3">
                                 {[...Array(5)].map((_, i) => {
                                     const fullStars = Math.floor(promos?.rating || 0);
                                     const hasHalfStar = (promos?.rating || 0) % 1 >= 0.5;
@@ -138,21 +148,21 @@ export default function PromoProducts () {
                                     if (i < fullStars) {
                                         // bintang penuh
                                         return <FontAwesomeIcon
-                                            key={i}
+                                            key={`star-${i}`}
                                             icon={faStarSolid}
                                             className="text-amber-400"
                                         />
                                     } else if (i === fullStars && hasHalfStar) {
                                         // bintang setengah
                                         return <FontAwesomeIcon
-                                            key={1}
+                                            key={`star-${i}`}
                                             icon={faStarHalfStroke}
                                             className="text-amber-400"
                                         />
                                     } else {
                                         // bintang kosong
                                         return <FontAwesomeIcon 
-                                            key={i}
+                                            key={`star-${i}`}
                                             icon={faStarRegular}
                                             className="text-amber-400"    
                                         />
@@ -162,30 +172,53 @@ export default function PromoProducts () {
 
                             <hr className="border-pink-500 my-4 border-2"/>
 
-                            <p className="text-gray-700 mt-4 mb-4">
+                            <p className="text-pink-500 font-semibold">Description</p>
+
+                            <p className="text-pink-500 mt-2 mb-3">
                                 {promos.description}
                             </p>
 
                             {/* Size */}
-                            {promos.sizes && (
-                                <div className="flex flex-col mt-4">
-                                    <p className="text-pink-500 font-medium">Choose Size</p>
+                            {Array.isArray(promos.sizes) && promos.sizes.length > 0 && (
+                                <div className="flex flex-col mt-3">
+                                    <p className="text-pink-500 font-semibold">Choose Size</p>
                                     <div className="flex items-center gap-2 mt-2">
                                         {promos.sizes.map((size, idx) => 
                                             <button
                                                 key={idx}
                                                 className={`px-3 py-1 border rounded-lg cursor-pointer 
-                                                    ${ selectedSize === size ? "bg-pink-500 text-white" : "bg-white text-pink-500" }
+                                                    ${ selectedSize === size.size 
+                                                        ? "bg-pink-500 text-white border-pink-500" 
+                                                        : "bg-white text-pink-500 border-pink-500 hover:bg-pink-500 hover:text-white" 
+                                                    }
                                                 `}
-                                                onClick={() => setSelectedSize(size)}
+                                                onClick={() => setSelectedSize(size.size)}
                                             >
-                                                {size}
+                                                {size.size}
                                             </button>
                                         )}
                                     </div>
                                 </div>
                             )}
-
+                            {/* {promos.sizes && (
+                                <div className="flex flex-col mt-4">
+                                    <p className="text-pink-500 font-medium">Choose Size</p>
+                                    <div className="flex items-center gap-2 mt-2">
+                                        {promos.sizes.map((sizeObj, idx) => 
+                                            <button
+                                                key={idx}
+                                                className={`px-3 py-1 border rounded-lg cursor-pointer 
+                                                    ${ selectedSize === sizeObj.size ? "bg-pink-500 text-white" : "bg-white text-pink-500" }
+                                                `}
+                                                onClick={() => setSelectedSize(sizeObj.size)}
+                                            >
+                                                {sizeObj.size}
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            )} */}
+                            
                             <hr className="border-pink-500 my-4 border-2"/>
 
                             {/* Qty selector */}
@@ -256,21 +289,21 @@ export default function PromoProducts () {
                                                     if (i < fullStars) {
                                                         // bintang penuh
                                                         return <FontAwesomeIcon
-                                                            key={i}
+                                                            key={`star-${i}`}
                                                             icon={faStarSolid}
                                                             className="text-amber-400"
                                                         />
                                                     } else if (i === fullStars && hasHalfStar) {
                                                         // bintang setengah
                                                         return <FontAwesomeIcon
-                                                            key={1}
+                                                            key={`star-${i}`}
                                                             icon={faStarHalfStroke}
                                                             className="text-amber-400"
                                                         />
                                                     } else {
                                                         // bintang kosong
                                                         return <FontAwesomeIcon 
-                                                            key={i}
+                                                            key={`star-${i}`}
                                                             icon={faStarRegular}
                                                             className="text-amber-400"    
                                                         />

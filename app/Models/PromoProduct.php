@@ -14,20 +14,30 @@ class PromoProduct extends Model
     protected $fillable = [
         'name',
         'slug',
-        'category',
         'price',
         'images_main',
         'images_preview',
         'description',
         'sizes',
         'rating',
-        'reviews',
+        'category_id',
+        'promo_id',
+        'original_price'
     ];
 
     protected $casts = [
         'images_preview' => 'array',
         'sizes' => 'array',
-        'reviews' => 'array',
         'rating' => 'decimal:1',
     ];
+
+    public function promo()
+    {
+        return $this->belongsTo(Promo::class, 'promo_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

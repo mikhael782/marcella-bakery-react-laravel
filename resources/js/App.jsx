@@ -16,6 +16,8 @@ import GalleryPage from "./Components/GalleryPage";
 import Testimoni from "./Components/Testimoni";
 import Contact from "./Components/Contact";
 import Footer from "./Components/Footer";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 
 // Wrapper biar Products remount tiap ganti categoryId
 function ProductsWrapper() {
@@ -159,6 +161,8 @@ function AppContent() {
                 <Route path="/promo-products/:id/:slug" element={<PromoProducts />} />
                 <Route path="/gallery" element={<GalleryPage />} />
                 <Route path="/gallery/:categoryId" element={<GalleryPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
             </Routes>
             <Footer />
         </>

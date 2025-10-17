@@ -3,7 +3,7 @@ import { faInstagram, faFacebook, faWhatsapp } from "@fortawesome/free-brands-sv
 
 export default function Footer() {
     return (
-        <footer className="bg-pink-500 text-white py-6 mt-10" style={{ fontFamily: '"Comic Sans MS", "Comic Neue", sans-serif' }}>
+        <footer className="bg-pink-500 text-white py-6" style={{ fontFamily: '"Comic Sans MS", "Comic Neue", sans-serif' }}>
             <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between gap-8 mt-4">
                 {/* Kolom Kiri: Nama Brand + Sosmed */}
                 <div>

@@ -24,6 +24,7 @@ const Products = () => {
         fetchCategories();
     }, []);
 
+    // Update images setiap kali categoryId berubah
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true);
@@ -71,9 +72,9 @@ const Products = () => {
                         </h2>
 
                         {/* Spinner */}
-                        <div className="w-10 h-10 mt-6 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
+                        <div className="w-10 h-10 mt-4 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
 
-                        <p className="text-gray-500 mt-2">Loading gallery...</p>
+                        <p className="text-pink-500 mt-4 font-semibold">Loading gallery...</p>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -113,7 +114,7 @@ const Products = () => {
                                                 <motion.div
                                                     layoutId="underline"
                                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                                    className="absolute left-0 right-0 -bottom-1 h-0.5 bg-pink-500 rounded"
+                                                    className="absolute left-0 right-0 -bottom-1 h-1 bg-pink-500 rounded-xl"
                                                 />
                                             )}
                                         </motion.button>
@@ -130,7 +131,7 @@ const Products = () => {
                                 filtered.map((item, idx) => (
                                 <motion.div
                                     key={idx}
-                                    className="bg-gray-50 rounded-lg shadow p-4"
+                                    className="bg-gray-50 rounded-xl shadow p-4"
                                     initial={{ opacity: 0, y: 50 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: idx * 0.15 }}
@@ -140,7 +141,7 @@ const Products = () => {
                                         alt={item.name}
                                         className="w-full h-52 object-cover rounded-lg mb-4"
                                     />
-                                    <h3 className="text-lg font-medium mb-1">{item.name}</h3>
+                                    <h3 className="text-lg text-pink-500 font-bold mb-1">{item.name}</h3>
                                     <p className="text-pink-500 mb-1">
                                         Rp {Number(item.price).toLocaleString("id-ID")}
                                     </p>
@@ -155,7 +156,7 @@ const Products = () => {
                                 </motion.div>
                                 ))
                                 ) : (
-                                    <p className="text-gray-500 mb-30">
+                                    <p className="text-pink-500 mb-30">
                                         No products available in this category.
                                     </p>
                                 )}

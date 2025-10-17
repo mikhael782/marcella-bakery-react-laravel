@@ -15,6 +15,7 @@ class PreviewController extends Controller
         // Cari preview berdasarkan id dan slug dari relasi menu
         $preview = Preview::with(['menu', 'category'])->find($id);
 
+        // Jika preview tidak ditemukan redirect ke halaman home
         if (!$preview) {
             return response()->json([
                 'message' => 'Item tidak ditemukan'
@@ -30,7 +31,7 @@ class PreviewController extends Controller
             ]);
         }
 
-        // Return data lengkap untuk Preview.jsx
+        // Jika ditemukan, return data lengkap untuk Preview.jsx
         return response()->json([
             'id' => $preview->id,
             'name' => $preview->name,
@@ -42,6 +43,7 @@ class PreviewController extends Controller
             'description' => $preview->description,
             'sizes' => $preview->sizes, // array, bisa null kalau bukan Cake
             'rating' => $preview->rating,
+            'menu_id' => $preview->menu->id ?? null, // **tambah ini**
         ]);
     }
 }

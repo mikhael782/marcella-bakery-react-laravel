@@ -6,6 +6,7 @@ import slugify from "../utils/slugify";
 const Menu = forwardRef((props, ref) => {
     const navigate = useNavigate();
     const [items, setItems] = useState([]);
+    const visibleItems = items.slice(0, 8);
 
     useEffect(() => {
         // Url BE laravel
@@ -16,7 +17,7 @@ const Menu = forwardRef((props, ref) => {
     }, []);
 
     return (
-        <section ref={ref} className="py-2 bg-pink-100 rounded-4xl scroll-mt-10">
+        <section ref={ref} className="py-2 bg-pink-100 rounded-2xl scroll-mt-10">
             <div className="max-w-7xl mx-auto text-center py-16" style={{ fontFamily: '"Comic Sans MS", "Comic Neue", sans-serif' }}>
                 <motion.h2 
                     className="text-2xl font-bold text-pink-500 mb-6 relative inline-block"
@@ -29,11 +30,11 @@ const Menu = forwardRef((props, ref) => {
                     <span className="block w-35 h-1 bg-pink-500 mt-3 rounded mx-auto"></span>
                 </motion.h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
-                    {items.map((item, idx) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-4">
+                    {visibleItems.map((item, idx) => (
                         <motion.div
                             key={idx}
-                            className="bg-gray-50 rounded-2xl shadow-lg p-4 cursor-pointer"
+                            className="bg-gray-50 rounded-xl shadow-lg p-4 cursor-pointer"
                             initial={{ opacity: 0, y: 50 }}   // ✅ animasi taruh di child
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -46,11 +47,11 @@ const Menu = forwardRef((props, ref) => {
                                 className="w-full h-52 object-cover rounded-lg mb-4"
                             />
 
-                            <h3 className="text-xl font-medium text-gray-800 mb-1">
+                            <h3 className="text-lg font-bold text-pink-500 mb-1">
                                 {item.name}
                             </h3>
 
-                            <p className="text-pink-500 font-medium mb-1">
+                            <p className="text-pink-500 mb-1">
                                 Rp {parseFloat(item.price).toLocaleString("id-ID")}
                             </p>
 

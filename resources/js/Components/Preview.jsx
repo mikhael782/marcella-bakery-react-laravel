@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import "swiper/css";
 import "swiper/css/pagination";
 import Swal from "sweetalert2";
+import slugify from "../utils/slugify";
 
 export default function Preview() {
     const navigate = useNavigate();
@@ -20,7 +21,9 @@ export default function Preview() {
     // ukuran cake
     const [selectedSize, setSelectedSize] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [relatedItems, setRelatedItems] = useState([]);
 
+    // Fetch item utama
     useEffect(() => {
         const fetchDataPreview = async () => {
             setLoading(true);
@@ -48,6 +51,23 @@ export default function Preview() {
         fetchDataPreview();
     }, [id, slug, navigate]);
 
+    // Fetch related items
+    useEffect(() => {
+        const fetchRelatedItems = async () => {
+            if (!item?.menu_id) return;
+
+            try{
+                const res = await fetch(`/api/menus/related/${item.menu_id}`);
+                if (!res.ok) throw new Error("Related Item tidak ditemukan");
+                const data = await res.json();
+                setRelatedItems(data);
+            } catch(err) {
+                console.error(err);
+            }
+        };
+        fetchRelatedItems();
+    }, [item]);
+
     if (!item && !loading) {
         return null; // hanya return null kalau udah gak loading + item kosong
     }
@@ -74,9 +94,9 @@ export default function Preview() {
                         </h2>
 
                         {/* Spinner */}
-                        <div className="w-10 h-10 mt-6 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
+                        <div className="w-10 h-10 mt-4 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
 
-                        <p className="text-gray-500 mt-2">Loading gallery...</p>
+                        <p className="text-pink-500 mt-4 font-semibold">Loading gallery...</p>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -122,16 +142,16 @@ export default function Preview() {
 
                         {/* Bagian kanan: Deskripsi */}
                         <div className="flex-1">
-                            <h2 className="text-2xl font-medium text-pink-500 mb-4">
+                            <h2 className="text-xl font-semibold text-pink-500 mb-3">
                                 {item.name}
                             </h2>
 
-                            <p className="text-pink-500 font-medium mb-4">
+                            <p className="text-pink-500 font-medium mb-3">
                                 Rp {Number(item.price).toLocaleString("id-ID")}
                             </p>
                             
                             {/* Rating */}
-                            <div className="flex items-center gap-1 mb-4">
+                            <div className="flex items-center gap-1 mb-3">
                                 {[...Array(5)].map((_, i) => {
                                     const fullStars = Math.floor(item?.rating || 0); // misal ada rating decimal
                                     const hasHalfStar = (item?.rating || 0) % 1 >= 0.5; 
@@ -164,22 +184,25 @@ export default function Preview() {
 
                             <hr className="border-pink-500 my-4 border-2"/>
 
-                            <p className="text-pink-500">Deskripsi</p>
+                            <p className="text-pink-500 font-semibold">Description</p>
 
-                            <p className="text-pink-500 mt-2 mb-4">
+                            <p className="text-pink-500 mt-2 mb-3">
                                 {item.description}
                             </p>
 
                             {/* Size */}
                             {Array.isArray(item.sizes) && item.sizes.length > 0 && (
-                                <div className="flex flex-col mt-4">
-                                    <p className="text-pink-500 font-medium">Choose Size</p>
+                                <div className="flex flex-col mt-3">
+                                    <p className="text-pink-500 font-semibold">Choose Size</p>
                                     <div className="flex items-center gap-2 mt-2">
                                         {item.sizes.map((size, idx) => (
                                             <button
                                                 key={idx}
                                                 className={`px-3 py-1 border rounded-lg cursor-pointer 
-                                                    ${selectedSize === size.size ? "bg-pink-500 text-white" : "bg-white text-pink-500"}
+                                                    ${selectedSize === size.size
+                                                        ? "bg-pink-500 text-white border-pink-500"
+                                                        : "bg-white text-pink-500 border-pink-500 hover:bg-pink-500 hover:text-white"
+                                                    }
                                                 `}
                                                 onClick={() => setSelectedSize(size.size)}
                                                 >
@@ -193,7 +216,7 @@ export default function Preview() {
                             <hr className="border-pink-500 my-4 border-2"/>
 
                             {/* Qty selector */}
-                            <div className="flex items-center gap-2 mt-4">
+                            <div className="flex items-center gap-2 mt-3">
                                 <div className="flex items-center border rounded-lg border-pink-600">
                                     <button
                                         disabled={qty <= 1}
@@ -236,7 +259,7 @@ export default function Preview() {
                     {/* Review Carousel */}
                     {item.reviews && item.reviews.length > 0 && (
                         <div 
-                            className="max-w-6xl mx-auto p-8 flex flex-col gap-4 bg-pink-100 rounded-2xl mt-4" 
+                            className="max-w-6xl mx-auto p-8 flex flex-col gap-4 bg-pink-100 rounded-2xl mt-3" 
                             style={{ fontFamily: '"Comic Sans MS", "Comic Neue", sans-serif' }}
                         >
                             <h3 className="text-2xl text-pink-500 font-medium mb-2">
@@ -295,6 +318,61 @@ export default function Preview() {
                                     </SwiperSlide>
                                 )}
                             </Swiper>
+                        </div>
+                    )}
+
+                    {/* Related Items */}
+                    {relatedItems.length > 0 && (
+                        <div className="max-w-6xl mx-auto p-8 mt-6 mb-6 bg-pink-100 rounded-2xl" 
+                            style={{ fontFamily: '"Comic Sans MS", "Comic Neue", sans-serif' }}>
+                            <motion.h2 
+                                className="text-xl font-bold text-pink-500 mb-6 text-center relative"
+                                initial={{ opacity: 0, y: -50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.3 }}
+                                viewport={{ once: true }}
+                            >
+                                You May Also Like
+                                <span className="block w-36 h-1 bg-pink-500 mt-3 rounded mx-auto"></span>
+                            </motion.h2>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+                                {relatedItems.map((item, idx) => (
+                                    <motion.div
+                                        key={item.id}
+                                        className="bg-gray-50 rounded-xl shadow-lg p-4 cursor-pointer"
+                                        initial={{ opacity: 0, y: 50 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.5, delay: idx * 0.15 }}
+                                    >
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            className="w-full h-52 object-cover rounded-lg mb-4"
+                                        />
+
+                                        <div className="flex flex-col items-center">
+                                            <h3 className="text-lg font-bold text-pink-500 mb-2 text-center">
+                                                {item.name}
+                                            </h3>
+
+                                            <p className="text-pink-500 mb-3 text-center">
+                                                Rp {parseFloat(item.price).toLocaleString("id-ID")}
+                                            </p>
+
+                                            <motion.button
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                className="px-4 py-1 bg-pink-500 text-white rounded-lg cursor-pointer"
+                                                onClick={() => navigate(`/preview/${item.preview_id}/${slugify(item.slug)}`)}
+                                            >
+                                                Preview
+                                            </motion.button>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
                         </div>
                     )}
                 </motion.div>
